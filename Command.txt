@@ -1,0 +1,158 @@
+Khởi động Zookeeper
+zookeeper-server-start.bat ../../config/zookeeper.properties
+
+Khởi động server
+--kafka-server-start.bat ../../server.properties
+kafka-server-start.bat D:/KAFKA/Running/kafka/config/server.properties
+
+Tạo topic
+kafka-topics.bat --create --bootstrap-server localhost:2181 --replication-factor 1 --partitions 1 --topic Topic1
+
+kafka-topics.bat --list --bootstrap-server localhost:9092 --command-config config.properties
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config config.properties --list --topic sample
+kafka-acls.bat --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --topic sample --command-config config.properties
+kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --allow-principal User:Alice --allow-hosts Host1,Host2 --operations Read,Write --topic Test-topic
+
+simpletalk_topic
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic Topic1 --command-config config.properties
+
+kafka-consumer-groups.bat --list --bootstrap-server localhost:9092 --command-config config.properties
+
+kafka-consumer-groups.bat --bootstrap-server localhost:9092 --list --all-groups --command-config config.properties
+kafka-consumer-groups.sh
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic simpletalk_topic --consumer.config config.properties --from-beginn 
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic simpletalk_topic --from-beginning
+
+tạo consumer
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic simpletalk_topic --from-beginning
+
+kafka-console-consumer.bat --bootstrap-server 172.16.146.113:9092 --topic chat-message --from-beginning
+
+10.0.0.130:9092
+
+delete topic
+C:\kafka-2.12\bin\windows>kafka-run-class.bat kafka.admin.TopicCommand --delete --topic chat-message --bootstrap-server localhost:9092
+
+
+kafka-topics.bat --list --bootstrap-server 10.0.0.130:9092
+
+
+kafka-configs.bat --bootstrap-server localhost:2181 --alter --add-config 'SCRAM-SHA-512=[password='EX']' --entity-type users --entity-name admin
+
+kafka-acls.bat --topic test-topic --add --allow-principal user:bob --operation ALL --config D:/KAFKA/Running/kafka/config/server.properties
+
+
+
+cd D:\KAFKA\Running\kafka_SASL\bin\windows
+
+./bin/kafka-configs.sh --zookeeper localhost:2181 --alter --add-config 'SCRAM-SHA-512=[password='admin-secret']' --entity-type users --entity-name admin
+
+
+
+$ export KAFKA_OPTS="-Djava.security.auth.login.config=/KAFKA_HOME/config/zookeeper_jaas.conf"
+-Djava.security.auth.login.config=D:/KAFKA/Running/kafka_SASL/config/kafka_server_jaas.conf
+-Djava.security.auth.login.config=D:/KAFKA/Running/kafka_SASL/config//zookeeper_jaas.conf
+SET KAFKA_OPTS="-Djava.security.auth.login.config=D:/KAFKA/Running/kafka_SASL/config/kafka_server_jaas.conf"
+
+zookeeper-server-start.bat ../../config/zookeeper.properties
+
+kafka-server-start.bat D:/KAFKA/Running/kafka_SASL/config/server.properties
+
+SET KAFKA_OPTS="-Djava.security.auth.login.config=D:/KAFKA/Running/kafka_SASL/config/zookeeper_jaas.conf"
+set KAFKA_OPTS="-Djava.security.auth.login.config=D:/KAFKA/Running/kafka_SASL/config/kafka_server_jaas.conf"
+
+
+
+echo %KAFKA_OPTS%
+
+https://docs.vmware.com/en/VMware-Smart-Assurance/10.1.0/sa-ui-installation-config-guide-10.1.0/GUID-3E473EC3-732A-4963-81BD-13BCCD3AC700.html
+
+kafka-acls.bat --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties  --add --allow-principal User:Bob --topic test-topic 
+
+kafka-acls.bat --authorizer-properties --bootstrap-server localhost:9093 --topic test-topic --add --allow-principal user:bob --operation ALL
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config config.properties --add --allow-principal User:fred --topic test-topic
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config config.properties --list
+
+docker exec -ti kafka /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+kafka-acls.bat --authorizer kafka.security.authorizer.AclAuthorizer --bootstrap-server localhost:9092 --command-config config.properties --add --allow-principal User:alice --operation Read --topic sample4
+kafka-acls.bat --authorizer kafka.security.authorizer.AclAuthorizer --command-config config.properties --add --allow-principal User:alice --operation Read --topic sample4
+kafka-acls.bat --authorizer kafka.security.authorizer.AclAuthorizer --authorizer-properties --bootstrap-server localhost:9092 --command-config config.properties --add --allow-principal User:alice --operation Read --topic sample4
+kafka-acls.bat --authorizer kafka.security.authorizer.AclAuthorizer --authorizer-properties --bootstrap-server localhost:9092 --add --allow-principal User:alice --operation Read --topic sample4
+--authorizer-properties zookeeper.connect=localhost:2181
+
+kafka-acls --bootstrap-server localhost:9092 --command-config adminclient-configs.conf --add --allow-principal User:alice --allow-principal User:fred --allow-host host-1 \
+ --allow-host host-2 --operation read --operation write --topic finance-topic
+ 
+docker-compose exec kafka kafka-topics --create --replication-factor 1 --zookeeper localhost:2181 --partitions 1 --topic users --command-config config.properties
+
+kafka-acls --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --allow-principal User:Alice --allow-hosts Host1,Host2 --operations Read,Write --topic Test-topic
+docker-compose exec kafka-acls --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --allow-principal User:Alice --allow-hosts * --operations Read,Write --topic topic1
+docker-compose exec kafka-acls --bootstrap-server localhost:9093 --command-config client-properties/adminclient.properties --topic first_topic --allow-principal User:producer --producer --add
+kafka-acls.bat --bootstrap-server localhost:9093 --command-config client-properties/adminclient.properties --topic first_topic --allow-principal User:producer --producer --add
+docker-compose exec kafka-console-producer --broker-list localhost:9093 --producer.config client-properties/producer.properties --topic first_topic
+kafka-console-producer.bat --broker-list localhost:9092 --producer.config client-properties/producer.properties --topic first_topic
+kafka-acls.bat --authorizer-properties --bootstrap-server localhost:9093 --topic test-topic --add --allow-principal user:bob --operation ALL
+docker run -it -e AUTHORIZER_ZOOKEEPER_CONNECT="localhost:2181" -e KSM_EXTRACT_ENABLE=true conduktor/kafka-security-manager:latest
+
+kafka-acls.bat --bootstrap-server localhost:9092  --command-config client-properties/adminclient.properties --list
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic first_topic --allow-principal User:producer --producer --add
+
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP2_in --allow-principal User:TCGP2 --producer --add
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP1_out --allow-principal User:TCGP1 --consumer --add --group "test"
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP1_in --allow-principal User:consumer --consumer --add --group "test"
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic LMSPro_in --allow-principal User:LMSPro --producer --remove
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic LMSPro_out --allow-principal User:consumer --consumer --remove --group "test-consumer-group-1"
+
+
+kafka-topics --bootstrap-server localhost:9092 --delete --topic topic2 --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+kafka-topics --bootstrap-server localhost:9092 --create --topic TCGP1_in --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+kafka-topics --bootstrap-server localhost:9092 --list --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+
+kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --list
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic first-topic --consumer.config client-properties/consumer.properties --group "test-consumer-group-1"
+kafka-consumer-groups.bat --list --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties
+kafka-console-producer.bat --bootstrap-server localhost:9092 --producer.config client-properties/producer.properties --topic first-topic
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP2_in --allow-principal User:TCGP3 --consumer --add --group "test"
+
+kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --list
+kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/producer.properties --list
+kafka-consumer-groups.bat  --list --bootstrap-server localhost:9092 --command-config client-properties/producer.properties
+
+
+kafka-acls.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP2_in --allow-principal User:TCGP3 --producer --add
+
+
+kafka-topics --bootstrap-server localhost:9092 --create --topic TCGP1_in --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 3
+kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --describe
+kafka-topics.bat  --zookeeper localhost:2181  --command-config client-properties/adminclient.properties --describe
+
+
+
+List topics
+kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --list
+
+Create topic
+kafka-topics --bootstrap-server localhost:9092 --create --topic <<Topic_name>> --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+kafka-topics --bootstrap-server localhost:9092 --create --topic testtopic --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 3
+
+Authorization
+	Producer:
+	kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic <<Topic_name>> --allow-principal User:<<User_name>> --producer --add
+	kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP1_in --allow-principal User:TCGP4 --producer --add
+kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic testtopic --allow-principal User:producer --producer --add
+	Consumer:
+	kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic <<Topic_name>> --allow-principal User:<<User_name>> --consumer --add --group "<<Group_name>>"
+		kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic testtopic --allow-principal User:consumer --consumer --add --group "test"
+
+
