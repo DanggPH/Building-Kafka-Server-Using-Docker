@@ -1,0 +1,89 @@
+- Tài liệu tham khảo + link:
+	+ Download Docker cho CentOS: https://docs.docker.com/engine/install/centos/
+	+ Github: 
+	
+- Uninstall old versions: 
+		yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+				  
+- Set up the repository: 
+		yum install -y yum-utils
+		yum-config-manager \
+			--add-repo \
+			https://download.docker.com/linux/centos/docker-ce.repo
+			
+- Install Docker Engine:
+		yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+		
+- List versions: 
+		yum list docker-ce --showduplicates | sort -r
+		
+- Install a specific version: 
+		yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io docker-compose-plugin
+		ex: yum install docker-ce-20.10.9 docker-ce-cli-20.10.9 containerd.io docker-compose-plugin
+		
+- Start/Restart Docker: 
+		systemctl start/restart docker
+		
+- Stop Docker: 
+		systemctl stop docker
+		
+- Enable cùng hệ thống: 
+		systemctl enable docker
+
+
+- Lấy source code từ github
+- Dùng winscp đưa thư mục Kafka vào /home/
+
+- Tiến hành pull Kafka từ server về: 
+	cd /home/Kafka/Kafka-server
+	vim docker-compose.yml => Sửa dòng KAFKA_ADVERTISED_LISTENERS => thành ip server => lưu
+	docker compose up (thêm -d nếu muôn chạy ngầm cho lần thứ 2 trở đi)
+- Chờ dòng Successfully login => Build thành công Kafka
+
+- Note run in Centos/Linux command .sh: 
+	cd /root/Kafka/kafka/bin
+	chmod +x * : cấp full quyền cho file .sh
+
+MỘT SỐ CHỨC NĂNG RUN BẰNG CÂU LỆNH TRONG SERVER KAFKA: 
+	1.Khởi động Zookeeper:
+		zookeeper-server-start.bat ../../config/zookeeper.properties 
+		./zookeeper-server-start.sh ../../config/zookeeper.properties 
+		
+	2. Khởi động server
+		--kafka-server-start.bat ../../server.properties 
+		./kafka-server-start.sh ../../server.properties	
+		# kafka-server-start.bat D:/KAFKA/Running/kafka/config/server.properties
+		
+	3. Tạo Topic(Chú ý mục Factor)
+		kafka-topics --bootstrap-server localhost:9092 --create --topic <<Topic_name>> --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+		./kafka-topics.sh --bootstrap-server localhost:9092 --create --topic <<Topic_name>> --command-config client-properties/adminclient.properties --partitions 1 --replication-factor 1
+
+	4. Tạo Comsumer
+		kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic simpletalk_topic --from-beginning
+		./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic simpletalk_topic --from-beginning
+
+	5. Xóa Topic
+		kafka-run-class.bat kafka.admin.TopicCommand --delete --topic chat-message --bootstrap-server localhost:9092
+		./kafka-run-class.sh kafka.admin.TopicCommand --delete --topic chat-message --bootstrap-server localhost:9092
+
+	6. List Topic
+		kafka-topics.bat --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --list
+		./kafka-topics.sh --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --list
+
+	7. Authorization
+		Producer:
+			kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic <<Topic_name>> --allow-principal User:<<User_name>> --producer --add
+			kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic TCGP1_in --allow-principal User:TCGP4 --producer --add
+			kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic testtopic --allow-principal User:producer --producer --add
+		Consumer:
+			kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic <<Topic_name>> --allow-principal User:<<User_name>> --consumer --add --group "<<Group_name>>"
+			kafka-acls --bootstrap-server localhost:9092 --command-config client-properties/adminclient.properties --topic testtopic --allow-principal User:consumer --consumer --add --group "test"
+
+		
