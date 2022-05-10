@@ -1,0 +1,24 @@
+COMMAND POPULAR IN CENTOS 7
+- Check status port: netstat -plntu
+- Open port in firewall: vim /etc/services 
+	+ service-name  port/protocol  [aliases ...]   [# comment]
+		ex: testport        55555/tcp   # Application Name
+	+ firewall-cmd --zone=public --add-port=port/protocol --permanent
+	+ firewall-cmd --reload
+- Check newly added port status: 
+	+ lsof -i -P |grep protocol
+	+ netstat -na |grep port
+- Service status: 
+	+ systemctl start/stop/restart/enable @nameservice
+- Web check status port: https://www.yougetsignal.com/tools/open-ports/
+- Install OpenVPN: https://www.howtoforge.com/tutorial/how-to-install-openvpn-server-and-client-with-easy-rsa-3-on-centos-7/
+
+- Check permission of files/folders: 
+	+ ls –l [file_name]
+- Define File Permission : 
+	+ chmod [permission] [file_name] 
+		7 – for read, write, and execute permission
+		6 – for read and write privileges
+		5 – for read and execute privileges
+		4 – for read privileges
+

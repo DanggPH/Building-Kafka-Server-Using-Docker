@@ -1,0 +1,74 @@
+DOCKER COMMANDS LINK: https://docs.docker.com/engine/reference/commandline/container_restart/
+
+MỘT SỐ OPTIONS THƯỜNG ĐI KÈM VỚI DOCKER COMMANDS
+-d : chạy ngầm command
+--ip: khai báo ip cho container
+--rm: Tự động xóa container khi nó thoát
+-w: chọn thư mục cần làm việc
+
+CONTAINERS COMMANDS
+- Run container
+	docker run [IMAGE_NAME]
+
+- List running container
+	docker ps
+	docker container ls -a: List all containers
+	
+- Start container
+	docker start [NAME]
+	
+- Stop container
+	docker container stop [Container ID]
+	docker stop $(docker ps -aq): Stop all
+
+- Restart container
+	docker container restart [OPTIONS] CONTAINER [CONTAINER...]
+	
+- Remove container
+	docker container rm [Container ID]
+	docker container rm -f [Container ID]: force
+	docker rm $(docker ps -aq): remove all
+	
+- Get log container
+	docker container logs [NAME]/[Container ID]
+	
+- View log container
+	docker logs --follow [NAME]
+	
+- List processes running in container
+	docker container top [NAME]
+	
+- View info
+	docker container inspect [NAME]
+- Performance stats
+	docker container stats [NAME]
+
+- Excute container
+	docker exec -it + [NAME] bash 
+	
+- Rename container
+	docker rename [OLD NAME] [NEW NAME]
+	
+- See the changes on the container
+	docker diff [NAME]
+	
+- Commit changes on containers and images
+	docker commit -m "message" [CONTAINER_NAME] [IMAGE_NAME]
+	
+- History of Commits
+	docker history [IMAGE_NAME]
+	
+	
+IMAGE COMMANDS
+- List Image pulled
+	 docker image ls
+	 
+- Pull images
+	docker pull [IMAGE]
+
+- Remove image
+	docker image rm [IMAGE]
+	docker rmi $(docker images -a -q) :remove all
+
+
+	
